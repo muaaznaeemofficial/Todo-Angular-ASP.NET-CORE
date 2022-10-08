@@ -1,0 +1,105 @@
+<div class="page-content page-container" id="page-content">
+  <div class="padding">
+    <div class="row container d-flex justify-content-center">
+      <div class="col-md-12">
+        <div class="card px-3">
+          <div class="card-body">
+            <h4 class="card-title">To do</h4>
+            <div class="add-items" class="col-md-12">
+              <form [formGroup]="todoForm" (ngSubmit)="OnSubmit()">
+                <div class="form-group">
+                  <input id="todoId" type="hidden" formControlName="id" />
+                  <input
+                    id="lastText"
+                    type="text"
+                    formControlName="todoText"
+                    class="form-control todo-list-input"
+                    placeholder="What You'll do today?"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  class="add btn btn-primary font-weight-bold todo-list-add-btn"
+                  hidden
+                >
+                  Add
+                </button>
+              </form>
+              <div class="d-flex flex-row-reverse" *ngIf="isEditMode">
+                <button
+                  type="Reset"
+                  class="add btn btn-light font-weight-bold todo-list-add-btn"
+                  (click)="onReset()"
+                >
+                  Cancel
+                </button>
+                <button
+                  class="add btn btn-secondary font-weight-bold todo-list-add-btn"
+                  (click)="onUpdate()"
+                >
+                  Update
+                </button>
+              </div>
+            </div>
+            <div class="list-wrapper">
+              <ul class="d-flex flex-column-reverse todo-list">
+                <div *ngFor="let item of todoList">
+                  <li *ngIf="!item.isCompleted" class="todo-item">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="checkbox"
+                          type="checkbox"
+                          (change)="onCheckUncheckItem(item.id)" />{{
+                          item.title
+                        }}
+                        <i class="input-helper"></i
+                      ></label>
+                    </div>
+                    <span>
+                      <button
+                        class="btn btn-secondary btn-lg btn-todo-edit"
+                        style="margin-right: 5px"
+                        (click)="onPopulateForm(item.id)"
+                      >
+                        Edit
+                      </button>
+                      <i
+                        class="remove mdi mdi-close-circle-outline"
+                        (click)="onDelete(item.id)"
+                      ></i>
+                    </span>
+                  </li>
+                </div>
+              </ul>
+            </div>
+            <h4 class="card-title">Completed</h4>
+
+            <div class="list-wrapper">
+              <ul class="d-flex flex-column-reverse todo-list">
+                <div *ngFor="let item of todoList">
+                  <li class="completed" *ngIf="item.isCompleted">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="checkbox"
+                          type="checkbox"
+                          checked
+                          (change)="onCheckUncheckItem(item.id)" />
+                        {{ item.title }} <i class="input-helper"></i
+                      ></label>
+                    </div>
+                    <i
+                      class="remove mdi mdi-close-circle-outline"
+                      (click)="onDelete(item.id)"
+                    ></i>
+                  </li>
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
